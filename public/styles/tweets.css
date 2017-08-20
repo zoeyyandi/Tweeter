@@ -5,9 +5,11 @@
 }
 
 .tweet .tweet-header {
+  display: flex;
+  justify-content: space-between;
   background-color: #e0e1e2;
   padding: 10px;
-  border-radius: 5px;
+  border-radius: 5px 5px 0 0;
 }
 
 .tweet {
@@ -29,22 +31,28 @@
 
 .tweet .tweet-header h2 {
   margin: 0;
-  display: inline;
+  display: inline-block;
   margin-left: 10px;
-  text-align: center;
+}
+
+#leftHeader {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
 }
 
 .tweet .tweet-header .avatar {
-  height: 40px;
-  width: 40px;
   display: inline-block;
   margin: 0;
+}
+
+#avatar {
   border-radius: 5px;
 }
 
 .tweet .tweet-header p {
-  float: right;
   color: #babbbc;
+  margin-top: 5px;
 }
 
 .tweet:hover .right {
@@ -72,6 +80,7 @@
 
 .icons li {
   display: inline-block;
+  margin: 0 5px;
 }
 
 ul.icons {

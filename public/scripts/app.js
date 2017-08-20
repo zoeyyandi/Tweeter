@@ -5,6 +5,8 @@
  */
 $(function() {
 
+  const wordLimit = '140'
+
   function convertTime(time) {
 
     var today = new Date()
@@ -18,8 +20,10 @@ $(function() {
     const time = convertTime(tweet.created_at)
     return `<article class="tweet">
           <header class="tweet-header">
-            <div class ="avatar"><img src=${tweet.user.avatars.small}></div>
-            <h2>${tweet.user.name}</h2>
+            <div id="leftHeader">
+              <div class ="avatar"><img id="avatar" src=${tweet.user.avatars.small}></div>
+              <h2>${tweet.user.name}</h2>
+            </div>
             <p>${tweet.user.handle}</p>
           </header>
           <p class="tweet-title">${tweet.content.text} </p>
@@ -62,6 +66,7 @@ $(function() {
       return
     }
     $('#message').empty()
+    $('.counter').html(wordLimit)
     $.ajax({
       url: '/tweets',
       method: 'POST',
