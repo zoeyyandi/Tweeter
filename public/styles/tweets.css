@@ -91,5 +91,8 @@ ul.icons {
   color: #00a087;
 }
 
+.fa.fa-heart.liked {
+  color: red;
+}
 
 

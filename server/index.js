@@ -5,6 +5,7 @@
 const PORT          = 8080;
 const express       = require("express");
 const bodyParser    = require("body-parser");
+const cookieSession = require('cookie-session');
 const app           = express();
 
 ///Mongo Database/////
@@ -14,6 +15,11 @@ const MONGODB_URI = "mongodb://localhost:27017/tweeter";
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+app.use(cookieSession({
+  name: 'session',
+  keys: ['key1', 'key2']
+}))
+
 MongoClient.connect(MONGODB_URI, (err, db) => {
   if (err) {
     console.error(`Failed to connect: ${MONGODB_URI}`);
@@ -22,6 +28,9 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
   const DataHelpers = require("./lib/data-helpers.js")(db);
 
   const tweetsRoutes = require("./routes/tweets")(DataHelpers);
+  const indexRoutes = require("./routes/index")(DataHelpers);
+  
+  app.use("/index", indexRoutes);
   app.use("/tweets", tweetsRoutes);
 
   app.listen(PORT, () => {
@@ -47,6 +56,9 @@ MongoClient.connect(MONGODB_URI, (err, db) => {
 // The `tweets-routes` module works similarly: we pass it the `DataHelpers` object
 // so it can define routes that use it to interact with the data layer.
 // Mount the tweets routes at the "/tweets" path prefix:
+
+
+
 
 
 

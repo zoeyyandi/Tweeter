@@ -4,6 +4,8 @@ const userHelper    = require("../lib/util/user-helper")
 
 const express       = require('express');
 const tweetsRoutes  = express.Router();
+const md5           = require('md5');
+const generateRandomString = require('../lib/util/randomString.js')
 
 module.exports = function(DataHelpers) {
 
@@ -23,13 +25,29 @@ module.exports = function(DataHelpers) {
       return;
     }
 
-    const user = req.body.user ? req.body.user : userHelper.generateRandomUser();
+    const userHandle = req.session.user_id.userID
+
+    const avatarUrlPrefix = `https://vanillicon.com/${md5(userHandle)}`;
+    const avatars = {
+      small:   `${avatarUrlPrefix}_50.png`,
+      regular: `${avatarUrlPrefix}.png`,
+      large:   `${avatarUrlPrefix}_200.png`
+    }
+
+    const user = {
+      name: `${req.session.user_id.firstName} ${req.session.user_id.lastName}`,
+      avatars,
+      handle: userHandle
+    }
+
     const tweet = {
-      user: user,
+      id: generateRandomString(12),
+      user,
       content: {
         text: req.body.text
       },
-      created_at: Date.now()
+      created_at: Date.now(),
+      likes: []
     };
 
     DataHelpers.saveTweet(tweet, (err) => {
@@ -40,6 +58,20 @@ module.exports = function(DataHelpers) {
       }
     });
   });
+
+  tweetsRoutes.post("/likes", function(req, res) {
+    const tweetID = req.body.id 
+    const userID = req.session.user_id.userID
+    console.log('twId', tweetID, 'user', userID)
+    DataHelpers.addLike(tweetID, userID, (err, result) => {
+      if(err) {
+        res.status(500).json({ error: err.message });
+      } else {
+        console.log('hihihihii')
+        res.status(200).send();
+      }
+    })
+  })
 
   return tweetsRoutes;
 
