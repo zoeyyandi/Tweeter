@@ -62,12 +62,10 @@ module.exports = function(DataHelpers) {
   tweetsRoutes.post("/likes", function(req, res) {
     const tweetID = req.body.id 
     const userID = req.session.user_id.userID
-    console.log('twId', tweetID, 'user', userID)
     DataHelpers.addLike(tweetID, userID, (err, result) => {
       if(err) {
         res.status(500).json({ error: err.message });
       } else {
-        console.log('hihihihii')
         res.status(200).send();
       }
     })

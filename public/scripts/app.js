@@ -41,7 +41,7 @@ $(function() {
               <ul class="icons">
                 <li><i class="fa fa-flag" aria-hidden="true"></i></li>
                 <li><i class="fa fa-retweet" aria-hidden="true"></i></li>
-                <li><i data-id=${tweet.id} data-like= class="fa fa-heart" aria-hidden="true"></i></li>
+                <li><i data-id=${tweet.id} data-like=false class="fa fa-heart" aria-hidden="true"></i></li>
                 <li>${tweet.likes.length}</li>
               </ul>
             </div>

@@ -78,7 +78,6 @@ module.exports = function makeDataHelpers(db) {
         if(err) {
           return callback(err)
         }
-        console.log('result', result)
         return callback(null, result)
       })  
     }
